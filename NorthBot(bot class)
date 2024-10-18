@@ -1,0 +1,52 @@
+import discord
+import random
+from discord.ext import commands
+import os
+
+intents = discord.Intents.default()
+intents.message_content = True
+
+bot = commands.Bot(command_prefix='$', intents=intents)
+
+def yazi_tura():
+    q = random.randint(0,1)
+    if q == 0:
+        g = "yazı"
+    elif q == 1:
+        g = "tura"
+    return g
+    
+@bot.event
+async def on_ready():
+    print(f'{bot.user} olarak giriş yaptık')
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f'Merhaba! Ben {bot.user}, bir Discord sohbet botuyum!')
+
+@bot.command()
+async def resim(ctx):
+    rastgele_resim = random.choice(os.listdir("images"))
+    with open(f'images/{rastgele_resim}', 'rb') as f:
+        picture = discord.File(f)
+    await ctx.send(file = picture)
+
+@bot.command()
+async def heh(ctx, count_heh = 5):
+    await ctx.send("he" * count_heh)
+
+@bot.command()
+async def wow(ctx, count_heh = 5):
+    await ctx.send("wow" * count_heh)
+
+def say_me_def():
+    a = ["Kalkış yaparken roketlerin benzin olarak kullandığı zehirli gazlar açığa çıkar!","Dronelar Lityum Pili kullanır, Lityum o kadar kolay bulunmuyor!(bu kullanma demek değil!)","Fazla su kullanmayın! Bitiyorlar!","Geri dönüşüm çok güzel olacak! :)","Her bacaya bir filtre, havadan asit yağmasını istemiyorsanız tabi:(","Çimler küllük değil!","Doğaya çöp atma, darılırım haa!"]
+    c = random.choice(a)
+    return c
+
+
+@bot.command()
+async def yazi_tura(ctx):
+    await ctx.send(yazi_tura())
+
+bot.run("MTI4Njk4NTM3NTY3NTQ1MzQ3MQ.GIWy6J.l5k2AwaHT4QSM8lD8OBrqr98yMPiyEkc69C2L8")
