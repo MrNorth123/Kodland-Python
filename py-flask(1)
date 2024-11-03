@@ -1,0 +1,26 @@
+from flask import Flask, redirect, url_for
+import random
+
+app = Flask(__name__)
+
+@app.route("/")
+def hello_world():
+    return '<h1>Hello, World!</h1> <p><a href="/ikincisayfa">İkinci sayfaya</a> git ya da <a href="/yazi_tura">yazı tura</a> at!</p>' #hocam bu satırı ve 20-24. satır arasını ChatGPT'den aldım.
+@app.route("/ikincisayfa")
+def index():
+    return "<h3>İkinci sayfa</h3> <a href=\"/\">Anasayfaya dön</a>"
+
+@app.route("/yazi_tura", methods=["GET", "POST"])
+def yazi_tura():
+    if random.randint(0, 1) == 0:
+        c = "yazı!"
+    else:
+        c = "tura!"
+
+    return f'''
+        <h1>{c}</h1>
+        <button onclick="window.location.reload();">Yeniden dene!</button>
+        <br><a href="/">Anasayfaya dön</a>
+    '''
+
+app.run(debug=True)
